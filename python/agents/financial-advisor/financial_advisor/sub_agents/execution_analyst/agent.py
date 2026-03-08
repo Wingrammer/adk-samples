@@ -17,6 +17,9 @@
 from google.adk import Agent
 
 from . import prompt
+from google.adk import Agent
+from financial_advisor.tools.broker import broker_place_order
+
 
 MODEL = "gemini-2.5-pro"
 
@@ -25,4 +28,5 @@ execution_analyst_agent = Agent(
     name="execution_analyst_agent",
     instruction=prompt.EXECUTION_ANALYST_PROMPT,
     output_key="execution_plan_output",
+    tools=[broker_place_order],
 )
