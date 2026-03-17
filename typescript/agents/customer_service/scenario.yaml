@@ -1,0 +1,36 @@
+name: "Cymbal Planting Service Full Audit"
+target_url: "http://localhost:3000/api/schedule_planting"
+
+scenarios:
+  - name: "The Baseline Double-Spend Trap"
+    tool: "schedule_planting_service"
+    payload:
+      customer_id: "123"
+      date: "2026-04-01"
+      time_slot: "09:00 AM"
+    idempotency_key_path: "idempotency_key"
+    delay_ms: 1000
+    attack_vector: "dare"
+    variant: "immediate"
+
+  - name: "The Semantic Idempotency Bypass"
+    tool: "schedule_planting_service"
+    payload:
+      customer_id: "123"
+      date: "2026-04-01"
+      time_slot: "09:00 AM"
+    idempotency_key_path: "idempotency_key"
+    delay_ms: 1000
+    attack_vector: "drift"
+    variant: "hash_bypass"
+
+  - name: "The Concurrent Agent Spawning Race"
+    tool: "schedule_planting_service"
+    payload:
+      customer_id: "123"
+      date: "2026-04-01"
+      time_slot: "09:00 AM"
+    idempotency_key_path: "idempotency_key"
+    race_count: 5
+    attack_vector: "race"
+    variant: "simultaneous"
